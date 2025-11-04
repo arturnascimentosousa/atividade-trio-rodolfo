@@ -29,7 +29,7 @@ module.exports = {
       return res.status(201).json({
         message: 'Usuário criado com sucesso.',
         usuario: {
-          uid: novoUsuario.uid,
+          id: novoUsuario.id,
           nome: novoUsuario.nome,
           email: novoUsuario.email
         }
@@ -56,12 +56,12 @@ module.exports = {
         return res.status(401).json({ message: 'Credenciais inválidas.' });
       }
 
-      const payload = { uid: usuario.uid, email: usuario.email };
-      const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '2h' });
+      const payload = { id: usuario.id, email: usuario.email };
+      const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '24h' });
       return res.status(200).json({
         message: 'Login realizado com sucesso.',
-        token,
-        usuario: { uid: usuario.uid, nome: usuario.nome, email: usuario.email }
+        token: 'Bearer ' + token,
+        usuario: { id: usuario.id, nome: usuario.nome, email: usuario.email }
       });
     } catch (err) {
       console.error('Erro no login:', err);

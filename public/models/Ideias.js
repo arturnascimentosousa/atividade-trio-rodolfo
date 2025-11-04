@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Ideia = sequelize.define('Ideia', {
-    uid: {
+    id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true
