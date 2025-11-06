@@ -82,12 +82,7 @@ module.exports = {
         });
       }
 
-      const ideia = await Ideia.findByPk(id, {
-        include: [
-          { model: Categoria, as: 'categoria', attributes: ['id', 'nome'] },
-          { model: Usuario, as: 'criador', attributes: ['id', 'nome', 'email'] }
-        ]
-      });
+      const ideia = await Ideia.findByPk(id);
 
       if (!ideia) {
         return res.status(404).json({ erro: 'Ideia não encontrada' });
