@@ -4,6 +4,7 @@ const path = require('path');
 const sequelize = require('./public/db/conn');
 const ideiaRoutes = require('./public/routes/ideiaRoutes');
 const usuarioRoutes = require('./public/routes/usuarioRoutes');
+const votosRoutes = require('./public/routes/votosRoutes')
 const { engine } = require('express-handlebars');
 const userMiddleware = require('./public/middlewares/userMiddleware');
 
@@ -79,6 +80,7 @@ app.use('/views', express.static(path.join(__dirname, 'src', 'views'))); // serv
 app.use('/', require('./src/route/route'));
 app.use('/usuario', usuarioRoutes);
 app.use('/ideia', ideiaRoutes);
+app.use('/votos', votosRoutes)
 
 // 5. CONEXÃO COM O BANCO E INICIALIZAÇÃO DO SERVIDOR
 sequelize
