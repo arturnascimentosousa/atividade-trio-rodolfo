@@ -4,6 +4,7 @@ const Usuario = require('./public/models/Usuario');
 const Ideia = require('./public/models/Ideias');
 const ideiaRoutes = require('./public/routes/ideiaRoutes');
 const usuarioRoutes = require('./public/routes/usuarioRoutes');
+const votosRoutes = require('./public/routes/votosRoutes')
 const { engine } = require('express-handlebars');
 
 const app = express();
@@ -17,6 +18,7 @@ app.use(express.static('public'));
 
 app.use('/usuario', usuarioRoutes);
 app.use('/ideia', ideiaRoutes);
+app.use('/votos', votosRoutes)
 
 // 5. CONEXÃO COM O BANCO E INICIALIZAÇÃO DO SERVIDOR
 conn
