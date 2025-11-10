@@ -1,0 +1,98 @@
+
+
+.ideas-container h1 {
+  font-size: 2rem;
+  color: #0a3d62;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* ===== GRID DE IDEIAS ===== */
+.ideas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ===== CARD DE IDEIA ===== */
+.idea-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.idea-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+}
+
+.idea-card h2 {
+  font-size: 1.3rem;
+  color: #023e8a;
+  margin-bottom: 0.5rem;
+}
+
+.idea-desc {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+  max-height: 70px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ===== FOOTER DO CARD ===== */
+.idea-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.idea-author {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+/* ===== BOTÃO ===== */
+.idea-btn {
+  text-decoration: none;
+  background-color: #007bff;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+.idea-btn:hover {
+  background-color: #0056b3;
+}
+
+/* ===== NENHUMA IDEIA ===== */
+.no-ideas {
+  text-align: center;
+  color: #666;
+  margin: 2rem 0 1rem;
+}
+
+.create-idea-btn {
+  display: block;
+  text-align: center;
+  width: fit-content;
+  margin: 0 auto;
+  background-color: #007bff;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.create-idea-btn:hover {
+  background-color: #0056b3;
+}

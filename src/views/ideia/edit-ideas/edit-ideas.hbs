@@ -1,0 +1,19 @@
+<section class="edit-idea">
+  <h2>Editar Ideia</h2>
+  <form action="/ideia/{{idea._id}}?_method=PUT" method="POST">
+    <label for="title">Título</label>
+    <input type="text" name="title" id="title" value="{{idea.title}}" required>
+
+    <label for="description">Descrição</label>
+    <textarea name="description" id="description" required>{{idea.description}}</textarea>
+
+    <label for="category">Categoria</label>
+    <input type="text" name="category" id="category" value="{{idea.category}}" required>
+
+    <button type="submit">Salvar Alterações</button>
+  </form>
+
+  <a href="/ideia/{{idea._id}}">← Voltar</a>
+</section>
+
+<script src="/ideia/edit-ideas/edit.js" defer></script>

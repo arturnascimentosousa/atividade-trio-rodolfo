@@ -1,0 +1,17 @@
+<section class="create-idea">
+  <h2>Nova Ideia</h2>
+  <form action="/ideia" method="POST">
+    <label for="title">Título</label>
+    <input type="text" name="title" id="title" required>
+
+    <label for="description">Descrição</label>
+    <textarea name="description" id="description" required></textarea>
+
+    <label for="category">Categoria</label>
+    <input type="text" name="category" id="category" required>
+
+    <button type="submit">Enviar Ideia</button>
+  </form>
+</section>
+
+<script src="/ideia/create-ideas/create.js" defer></script>

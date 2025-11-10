@@ -1,0 +1,21 @@
+<main class="ideas-container">
+  <h1>💡 Minhas Ideias</h1>
+
+  {{#if ideia.length}}
+    <div class="ideas-grid">
+      {{#each ideia}}
+        <div class="idea-card">
+          <h2>{{this.title}}</h2>
+          <p class="idea-desc">{{this.description}}</p>
+          <div class="idea-footer">
+            <span class="idea-author">Por {{this.authorId}}</span>
+            <a href="/ideia/{{this._id}}" class="idea-btn">Ver detalhes</a>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  {{else}}
+    <p class="no-ideas">Você ainda não enviou nenhuma ideia 😅</p>
+    <a href="/ideia/new" class="create-idea-btn">+ Criar nova ideia</a>
+  {{/if}}
+</main>

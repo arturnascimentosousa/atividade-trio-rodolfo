@@ -1,0 +1,25 @@
+<main class="idea-details">
+  <div class="idea-card">
+    <h1 class="idea-title">{{idea.title}}</h1>
+    <p class="idea-description">{{idea.description}}</p>
+
+    <div class="idea-info">
+      <p><strong>Categoria:</strong> {{idea.category}}</p>
+      <p><strong>Autor:</strong> {{idea.author.name}}</p>
+      <p><strong>Votos:</strong> {{idea.votesCount}}</p>
+    </div>
+
+    <form action="/ideia/{{idea._id}}/vote" method="POST" class="idea-vote-form">
+      <button type="submit" class="vote-btn">👍 Votar</button>
+    </form>
+
+    <div class="idea-actions">
+      {{#if (eq idea.authorId user._id)}}
+        <a href="/ideia/{{idea._id}}/edit" class="edit-btn">✏️ Editar</a>
+      {{/if}}
+      <a href="/ideia" class="back-btn">← Voltar</a>
+    </div>
+  </div>
+</main>
+
+<script src="/ideia/show-ideas/show.js" defer></script>

@@ -1,0 +1,108 @@
+/* ===== NAVBAR BASE ===== */
+.navbar {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background-color: #004aad;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ===== NAVBAR LEFT ===== */
+.navbar-left .navbar-logo {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  transition: opacity 0.3s ease;
+}
+
+.navbar-left .navbar-logo:hover {
+  opacity: 0.8;
+}
+
+/* ===== NAVBAR CENTER ===== */
+.navbar-center {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.navbar-center a {
+  text-decoration: none;
+  color: #f1f1f1;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.navbar-center a:hover {
+  color: #ffdd57;
+}
+
+/* ===== NAVBAR RIGHT ===== */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.navbar-right span {
+  font-weight: 500;
+}
+
+.navbar-right a {
+  text-decoration: none;
+  color: #f1f1f1;
+  font-weight: 500;
+  transition: color 0.2s ease, background 0.2s ease;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+}
+
+/* ===== BUTTON STYLES ===== */
+.navbar-right .logout-btn {
+  background-color: #e63946;
+}
+
+.navbar-right .logout-btn:hover {
+  background-color: #d62828;
+}
+
+.navbar-right .register-btn {
+  background-color: #ffdd57;
+  color: #222;
+}
+
+.navbar-right .register-btn:hover {
+  background-color: #ffd633;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .navbar {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .navbar-center {
+    order: 3;
+    flex-basis: 100%;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+
+  .navbar-right {
+    order: 2;
+  }
+
+  .navbar-left {
+    order: 1;
+  }
+}
