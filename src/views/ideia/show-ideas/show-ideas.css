@@ -1,105 +1,149 @@
-/* ===== CONTAINER PRINCIPAL ===== */
 .idea-details {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
 }
 
-/* ===== CARD ===== */
 .idea-card {
-  background: #fff;
-  width: 100%;
-    max-width: 800px;
-  border-radius: 16px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
-  text-align: left;
-  animation: fadeIn 0.4s ease;
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* ===== TÍTULO E DESCRIÇÃO ===== */
 .idea-title {
+  color: #1e293b;
   font-size: 2rem;
-  color: #023e8a;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .idea-description {
-  font-size: 1.05rem;
-  color: #333;
-  margin-bottom: 1.5rem;
+  color: #475569;
+  font-size: 1.1rem;
   line-height: 1.6;
+  margin-bottom: 2rem;
+  white-space: pre-line;
 }
 
-/* ===== INFORMAÇÕES ===== */
 .idea-info {
-  background-color: #f0f6ff;
-  border-left: 4px solid #007bff;
-  padding: 1rem;
-  border-radius: 8px;
-  margin-bottom: 1.5rem;
+  background: #f8fafc;
+  padding: 1.5rem;
+  border-radius: 6px;
+  margin-bottom: 2rem;
 }
 
 .idea-info p {
-  margin: 0.3rem 0;
-  font-size: 0.95rem;
-  color: #444;
+  margin: 0.5rem 0;
+  color: #334155;
 }
 
-/* ===== BOTÃO DE VOTO ===== */
-.idea-vote-form {
-  text-align: center;
+.idea-info strong {
+  color: #1e293b;
+  margin-right: 0.5rem;
+}
+
+.vote-section {
+  margin: 1.5rem 0;
+  display: flex;
+  justify-content: center;
+
   margin-bottom: 1.5rem;
 }
 
 .vote-btn {
-  background-color: #007bff;
-  color: white;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #f0f2f5;
   border: none;
-  padding: 0.7rem 1.5rem;
-  border-radius: 8px;
-  font-size: 1rem;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  font-size: 1.1rem;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .vote-btn:hover {
-  background-color: #0056b3;
+  background: #e4e6e9;
+  transform: translateY(-1px);
 }
 
-/* ===== AÇÕES (EDITAR / VOLTAR) ===== */
+.vote-btn.voted {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.vote-icon {
+  font-size: 1.3rem;
+}
+
+.vote-count {
+  font-weight: 600;
+}
+
 .idea-actions {
+  margin-top: 2rem;
   display: flex;
-  justify-content: space-between;
+  gap: 1rem;
+  justify-content: flex-end;
   align-items: center;
 }
 
 .edit-btn,
 .back-btn {
+  padding: 0.7rem 1.2rem;
+  border-radius: 6px;
   text-decoration: none;
-  padding: 0.6rem 1rem;
-  border-radius: 8px;
   font-weight: 500;
-  transition: background 0.2s ease, color 0.2s ease;
+  transition: all 0.2s ease;
 }
 
-/* Editar */
 .edit-btn {
-  background-color: #0077b6;
-  color: #fff;
+  background: #3b82f6;
+  color: white;
 }
 
 .edit-btn:hover {
-  background-color: #005b8a;
+  background: #2563eb;
 }
 
-/* Voltar */
 .back-btn {
-  color: #007bff;
+  color: #64748b;
 }
 
 .back-btn:hover {
-  color: #0056b3;
+  color: #1e293b;
 }
+
+.feedback {
+  padding: 0.75rem;
+  border-radius: 6px;
+  text-align: center;
+  margin: 1rem 0;
+  animation: fadeIn 0.3s ease;
+}
+
+.feedback.success {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.feedback.error {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.feedback.info {
+  background: #e0f2fe;
+  color: #075985;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
 
 /* ===== ANIMAÇÃO ===== */
 @keyframes fadeIn {

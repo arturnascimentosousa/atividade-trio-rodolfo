@@ -1,17 +1,48 @@
-<section class="create-idea">
-  <h2>Nova Ideia</h2>
-  <form action="/ideia" method="POST">
-    <label for="title">Título</label>
-    <input type="text" name="title" id="title" required>
+<main class="create-idea">
+  <h2>Compartilhe sua Ideia</h2>
+  
+  <div id="successMessage" class="success">
+    Ideia criada com sucesso!
+  </div>
 
-    <label for="description">Descrição</label>
-    <textarea name="description" id="description" required></textarea>
+  <form id="createIdeaForm">
+    <div class="field-group">
+      <label for="titulo">Título da Ideia</label>
+      <input 
+        type="text" 
+        id="titulo" 
+        name="titulo" 
+        required 
+        placeholder="Ex: Sistema de Gestão Escolar"
+        minlength="5"
+        maxlength="100"
+      >
+    </div>
 
-    <label for="category">Categoria</label>
-    <input type="text" name="category" id="category" required>
+    <div class="field-group">
+      <label for="detalhes">Detalhes da Ideia</label>
+      <textarea 
+        id="detalhes" 
+        name="detalhes" 
+        required 
+        placeholder="Descreva sua ideia em detalhes..."
+        minlength="20"
+      ></textarea>
+    </div>
 
-    <button type="submit">Enviar Ideia</button>
+    <div class="field-group">
+      <label for="fk_categoria">Categoria</label>
+      <select id="fk_categoria" name="fk_categoria" required>
+        <option value="">Selecione uma categoria</option>
+        {{#each categorias}}
+          <option value="{{this.id}}">{{this.nome}}</option>
+        {{/each}}
+      </select>
+    </div>
+
+    <button type="submit">Publicar Ideia</button>
   </form>
-</section>
+</main>
 
-<script src="/ideia/create-ideas/create.js" defer></script>
+<link rel="stylesheet" href="/views/ideia/create-ideas/create-ideas.css">
+<script src="/views/ideia/create-ideas/create-ideas.js" defer></script>

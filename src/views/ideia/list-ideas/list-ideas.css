@@ -1,10 +1,31 @@
 
 
+.ideas-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
 .ideas-container h1 {
   font-size: 2rem;
   color: #0a3d62;
-  margin-bottom: 1.5rem;
-  text-align: center;
+  margin: 0;
+}
+
+.create-idea-btn {
+  background: #0a3d62;
+  color: white;
+  padding: 0.7rem 1.2rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.create-idea-btn:hover {
+  background: #0d4b7a;
+  transform: translateY(-1px);
 }
 
 /* ===== GRID DE IDEIAS ===== */
@@ -47,7 +68,79 @@
   text-overflow: ellipsis;
 }
 
+/* ===== META INFO ===== */
+.idea-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.idea-category {
+  background: #e3f2fd;
+  color: #1565c0;
+  padding: 0.3rem 0.8rem;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.idea-author {
+  color: #666;
+}
+
 /* ===== FOOTER DO CARD ===== */
+.idea-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.vote-section {
+  display: flex;
+  align-items: center;
+}
+
+.vote-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #f0f2f5;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.vote-btn:hover {
+  background: #e4e6e9;
+}
+
+.vote-btn.voted {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.vote-icon {
+  font-size: 1.1rem;
+}
+
+.vote-count {
+  font-weight: 600;
+}
+
+.idea-btn {
+  color: #1565c0;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.idea-btn:hover {
+  color: #0d47a1;
+}
 .idea-footer {
   display: flex;
   justify-content: space-between;

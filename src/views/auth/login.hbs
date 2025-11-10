@@ -13,8 +13,13 @@
     </form>
 
     <div class="auth-footer">
-      <p>Não tem conta? <a href="/usuario/cadastro">Cadastre-se</a></p>
+      <p>Não tem conta? <a href="/cadastro">Cadastre-se</a></p>
     </div>
+    {{#if errorMessage}}
+    <div class="auth-error">
+      {{errorMessage}}
+    </div>
+    {{/if}}
   </div>
 
   <script src="/auth/login.js" defer></script>

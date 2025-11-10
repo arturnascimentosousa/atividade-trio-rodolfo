@@ -10,14 +10,18 @@ formLogin.addEventListener("submit", async (e) => {
     const res = await fetch("/usuario/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      // garante que cookies enviados pelo servidor sejam aceitos pelo browser
+      credentials: 'same-origin',
       body: JSON.stringify({ email, senha })
     });
 
     const data = await res.json();
 
     if (res.ok) {
-      localStorage.setItem("token", data.token); // guarda JWT
-      window.location.href = "/ideia"; // redireciona manualmente
+      // token também veio em cookie HTTP-only; guardamos em localStorage para chamadas API se desejar
+      localStorage.setItem("token", data.token);
+      // redireciona para o perfil do usuário
+      window.location.href = "/profile";
     } else {
       alert(data.message); // mostra erro
     }

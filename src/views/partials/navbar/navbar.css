@@ -74,6 +74,15 @@
   background-color: #d62828;
 }
 
+.navbar-right .profile-btn {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.navbar-right .profile-btn:hover {
+  background-color: #2563eb;
+}
+
 .navbar-right .register-btn {
   background-color: #ffdd57;
   color: #222;

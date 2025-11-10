@@ -31,11 +31,16 @@
       >
 
       <button type="submit" class="auth-btn">Cadastrar</button>
-    </form>
-    <script src="/cadastro.js"></script>
+  </form>
+  <script src="/auth/cadastro.js"></script>
     <div class="auth-footer">
-      <p>Já tem uma conta? <a href="/usuario/login">Entrar</a></p>
+      <p>Já tem uma conta? <a href="/login">Entrar</a></p>
     </div>
+    {{#if errorMessage}}
+    <div class="auth-error">
+      {{errorMessage}}
+    </div>
+    {{/if}}
   </div>
   <script src="../protect.js"></script>
 

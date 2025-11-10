@@ -17,11 +17,16 @@ formCadastro.addEventListener("submit", async (e) => {
 
     const data = await res.json();
 
-    if (res.ok) {
-      alert("Cadastro realizado com sucesso! Faça login.");
-      window.location.href = "/usuario/login";
+      if (res.ok) {
+      // Salvar token no localStorage
+      if (data.token) {
+        localStorage.setItem('token', data.token);
+      }
+      
+      alert("Cadastro realizado com sucesso!");
+      window.location.href = "/ideia"; // Redireciona para lista de ideias
     } else {
-      alert(data.message);
+      alert(data.message || "Erro ao cadastrar usuário.");
     }
   } catch (err) {
     console.error(err);

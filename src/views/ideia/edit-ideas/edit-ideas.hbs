@@ -1,19 +1,27 @@
 <section class="edit-idea">
   <h2>Editar Ideia</h2>
-  <form action="/ideia/{{idea._id}}?_method=PUT" method="POST">
-    <label for="title">Título</label>
-    <input type="text" name="title" id="title" value="{{idea.title}}" required>
+  <form class="edit-form" data-idea-id="{{idea.id}}">
+    <label for="titulo">Título</label>
+    <input type="text" name="titulo" id="titulo" value="{{idea.titulo}}" required>
 
-    <label for="description">Descrição</label>
-    <textarea name="description" id="description" required>{{idea.description}}</textarea>
+    <label for="detalhes">Detalhes</label>
+    <textarea name="detalhes" id="detalhes" required>{{idea.detalhes}}</textarea>
 
-    <label for="category">Categoria</label>
-    <input type="text" name="category" id="category" value="{{idea.category}}" required>
+    <label for="fk_categoria">Categoria</label>
+    <select name="fk_categoria" id="fk_categoria" required>
+      {{#each categorias}}
+        <option value="{{this.id}}" {{#if (eq ../idea.fk_categoria this.id)}}selected{{/if}}>
+          {{this.nome}}
+        </option>
+      {{/each}}
+    </select>
 
     <button type="submit">Salvar Alterações</button>
   </form>
-
-  <a href="/ideia/{{idea._id}}">← Voltar</a>
 </section>
 
-<script src="/ideia/edit-ideas/edit.js" defer></script>
+<link rel="stylesheet" href="/views/ideia/edit-ideas/edit-ideas.css">
+<script src="/views/ideia/edit-ideas/edit-ideas.js" defer></script>
+
+  <a href="/ideia/{{idea.id}}" class="back-btn">← Voltar</a>
+</section>

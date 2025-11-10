@@ -1,0 +1,87 @@
+.create-idea {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.create-idea h2 {
+  color: #1e293b;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+.create-idea form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.create-idea label {
+  font-weight: 500;
+  color: #334155;
+  margin-bottom: 0.3rem;
+}
+
+.create-idea input,
+.create-idea textarea,
+.create-idea select {
+  width: 100%;
+  padding: 0.8rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.create-idea textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.create-idea input:focus,
+.create-idea textarea:focus,
+.create-idea select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.create-idea button {
+  background: #3b82f6;
+  color: white;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 1rem;
+}
+
+.create-idea button:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+}
+
+.create-idea .error {
+  color: #dc2626;
+  font-size: 0.9rem;
+  margin-top: 0.3rem;
+}
+
+.create-idea .success {
+  background: #dcfce7;
+  color: #166534;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  display: none;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+}

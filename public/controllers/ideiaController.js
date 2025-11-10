@@ -52,16 +52,28 @@ module.exports = {
       const ideias = await Ideia.findAll({
         include: [
           { model: Categoria, as: 'categoria', attributes: ['id', 'nome'] },
-          { model: Usuario, as: 'criador', attributes: ['id', 'nome', 'email'] }
+          { model: Usuario, as: 'criador', attributes: ['id', 'nome', 'email'] },
+          {
+            model: Voto,
+            as: 'votos',
+            attributes: ['fk_user'],
+            required: false
+          }
         ],
-        order: [['id', 'ASC']]
+        order: [['id', 'DESC']] // Mais recentes primeiro
       });
 
-      if (!ideias.length) {
-        return res.status(204).send();
-      }
+      // Adiciona contagem de votos e se o usuário atual votou
+      const ideiasProcessadas = ideias.map(ideia => {
+        const plain = ideia.get({ plain: true });
+        plain.votoCount = plain.votos ? plain.votos.length : 0;
+        plain.userVoted = plain.votos ? plain.votos.some(v => v.fk_user === req.user.id) : false;
+        delete plain.votos; // Remove array de votos do response
+        return plain;
+      });
 
-      res.status(200).json(ideias);
+      res.status(200).json(ideiasProcessadas);
+      
     } catch (err) {
       console.error('Erro ao listar ideias:', err);
       res.status(500).json({
@@ -98,10 +110,68 @@ module.exports = {
     }
   },
 
+  async votar(req, res) {
+    try {
+      const { id } = req.params;
+      const userId = req.user.id;
+
+      const ideia = await Ideia.findByPk(id);
+      if (!ideia) {
+        return res.status(404).json({ erro: 'Ideia não encontrada' });
+      }
+
+      // Verifica se já votou
+      const votoExistente = await Voto.findOne({
+        where: { fk_ideia: id, fk_user: userId }
+      });
+
+      if (votoExistente) {
+        // Remove o voto
+        await votoExistente.destroy();
+        
+        // Atualiza contador
+        const votoCount = await Voto.count({
+          where: { fk_ideia: id }
+        });
+
+        return res.json({
+          mensagem: 'Voto removido',
+          userVoted: false,
+          votoCount
+        });
+      }
+
+      // Cria novo voto
+      await Voto.create({
+        fk_ideia: id,
+        fk_user: userId
+      });
+
+      // Retorna contagem atualizada
+      const votoCount = await Voto.count({
+        where: { fk_ideia: id }
+      });
+
+      res.json({
+        mensagem: 'Voto registrado',
+        userVoted: true,
+        votoCount
+      });
+
+    } catch (err) {
+      console.error('Erro ao processar voto:', err);
+      res.status(500).json({
+        erro: 'Erro interno ao processar voto',
+        detalhes: err.message
+      });
+    }
+  },
+
   async atualizar(req, res) {
     try {
       const { id } = req.params;
       const { titulo, detalhes, fk_categoria } = req.body;
+      const userId = req.user.id;
 
       if (isNaN(id)) {
         return res.status(400).json({
@@ -110,9 +180,19 @@ module.exports = {
         });
       }
 
-      const ideia = await Ideia.findByPk(id);
+      // Busca a ideia e verifica se o usuário é o criador
+      const ideia = await Ideia.findOne({
+        where: {
+          id: id,
+          fk_usuario_criador: userId
+        }
+      });
+
       if (!ideia) {
-        return res.status(404).json({ erro: 'Ideia não encontrada' });
+        return res.status(404).json({ 
+          erro: 'Ideia não encontrada',
+          detalhes: 'Ideia não existe ou você não tem permissão para editá-la'
+        });
       }
 
       if (fk_categoria) {

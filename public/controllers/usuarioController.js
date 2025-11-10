@@ -1,7 +1,5 @@
 require('dotenv').config();
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('../db/conn'); 
-const Usuario = require('../models/Usuario')(sequelize, DataTypes);
+const { Usuario } = require('../models');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const SECRET_KEY = process.env.SECRET_KEY;
@@ -19,6 +17,21 @@ module.exports = {
         return res.status(400).json({ message: 'Email já cadastrado.' });
       }
 
+      // Validar senha
+      if (senha.length < 6) {
+        return res.status(400).json({ 
+          message: 'A senha deve ter no mínimo 6 caracteres.' 
+        });
+      }
+
+      // Validar email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        return res.status(400).json({ 
+          message: 'Email inválido.' 
+        });
+      }
+
       const saltRounds = 10;
       const senhaHash = await bcrypt.hash(senha, saltRounds);
       const novoUsuario = await Usuario.create({
@@ -26,13 +39,33 @@ module.exports = {
         email,
         senha: senhaHash
       });
+
+      // Gerar token JWT
+      const token = jwt.sign(
+        { 
+          id: novoUsuario.id, 
+          email: novoUsuario.email,
+          nome: novoUsuario.nome
+        },
+        SECRET_KEY,
+        { expiresIn: '24h' }
+      );
+
+      // Setar cookie
+      res.cookie('token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 24 * 60 * 60 * 1000 // 24 horas
+      });
+
       return res.status(201).json({
         message: 'Usuário criado com sucesso.',
         usuario: {
           id: novoUsuario.id,
           nome: novoUsuario.nome,
           email: novoUsuario.email
-        }
+        },
+        token
       });
     } catch (err) {
       console.error('Erro ao cadastrar usuário:', err);
@@ -58,6 +91,14 @@ module.exports = {
 
       const payload = { id: usuario.id, email: usuario.email };
       const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '24h' });
+
+      // set cookie HTTP-only (para SSR) - cookie contém o token puro (sem 'Bearer ')
+      res.cookie('token', token, {
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000, // 24h
+        sameSite: 'lax'
+      });
+
       return res.status(200).json({
         message: 'Login realizado com sucesso.',
         token: 'Bearer ' + token,

@@ -1,0 +1,89 @@
+<main class="error-page">
+  <div class="error-container">
+    <div class="error-icon">⚠️</div>
+    <h1>Ops! Algo deu errado</h1>
+    
+    {{#if message}}
+      <p class="error-message">{{message}}</p>
+    {{else}}
+      <p class="error-message">Ocorreu um erro inesperado. Tente novamente.</p>
+    {{/if}}
+
+    <div class="error-actions">
+      <a href="/" class="btn btn-primary">Voltar para Home</a>
+      <a href="/login" class="btn btn-outline">Fazer Login</a>
+    </div>
+  </div>
+</main>
+
+<style>
+.error-page {
+  min-height: calc(100vh - 60px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background-color: #f8fafc;
+}
+
+.error-container {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.error-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.error-container h1 {
+  color: #1e293b;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.error-message {
+  color: #64748b;
+  margin-bottom: 2rem;
+}
+
+.error-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.btn {
+  text-decoration: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background: #0066cc;
+  color: white;
+}
+
+.btn-outline {
+  border: 2px solid #0066cc;
+  color: #0066cc;
+}
+
+.btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+</style>

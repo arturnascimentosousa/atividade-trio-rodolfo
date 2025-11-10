@@ -1,0 +1,162 @@
+<main class="profile-page">
+  <div class="profile-container">
+    <div class="profile-header">
+      <h1>Meu Perfil</h1>
+    </div>
+
+    <div class="profile-info">
+      <div class="info-card">
+        <h2>Informações Pessoais</h2>
+        <div class="info-row">
+          <strong>Nome:</strong>
+          <span>{{user.nome}}</span>
+        </div>
+        <div class="info-row">
+          <strong>Email:</strong>
+          <span>{{user.email}}</span>
+        </div>
+      </div>
+
+      <div class="ideas-section">
+        <h2>Minhas Ideias</h2>
+        {{#if userIdeas.length}}
+          <ul class="ideas-list">
+            {{#each userIdeas}}
+              <li class="idea-item">
+                <a href="/ideia/{{this.id}}" class="idea-link">
+                  <h3>{{this.title}}</h3>
+                  {{#if this.description}}
+                    <p class="idea-description">{{this.description}}</p>
+                  {{/if}}
+                </a>
+              </li>
+            {{/each}}
+          </ul>
+        {{else}}
+          <p class="no-ideas">Você ainda não criou nenhuma ideia.</p>
+          <a href="/ideia/new" class="btn btn-primary">Criar Primeira Ideia</a>
+        {{/if}}
+      </div>
+    </div>
+
+    <div class="profile-actions">
+      <a href="/ideia/new" class="btn btn-primary">Nova Ideia</a>
+      <a href="/logout" class="btn btn-outline">Sair</a>
+    </div>
+  </div>
+</main>
+
+<style>
+.profile-page {
+  padding: 2rem;
+}
+
+.profile-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.profile-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.profile-header h1 {
+  font-size: 2rem;
+  color: #333;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.info-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.info-card h2 {
+  margin-bottom: 1rem;
+  color: #444;
+}
+
+.info-row {
+  display: flex;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.info-row strong {
+  width: 100px;
+  color: #666;
+}
+
+.ideas-section {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.ideas-list {
+  list-style: none;
+  padding: 0;
+}
+
+.idea-item {
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.idea-item:last-child {
+  border-bottom: none;
+}
+
+.idea-link {
+  text-decoration: none;
+  color: #333;
+}
+
+.idea-link:hover {
+  color: #0066cc;
+}
+
+.no-ideas {
+  text-align: center;
+  color: #666;
+  margin: 2rem 0;
+}
+
+.profile-actions {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.btn-primary {
+  background: #0066cc;
+  color: white;
+}
+
+.btn-outline {
+  border: 2px solid #0066cc;
+  color: #0066cc;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+</style>
