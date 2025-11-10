@@ -1,0 +1,114 @@
+/* ===== CONTAINER PRINCIPAL ===== */
+.idea-details {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ===== CARD ===== */
+.idea-card {
+  background: #fff;
+  width: 100%;
+    max-width: 800px;
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  animation: fadeIn 0.4s ease;
+}
+
+/* ===== TÍTULO E DESCRIÇÃO ===== */
+.idea-title {
+  font-size: 2rem;
+  color: #023e8a;
+  margin-bottom: 1rem;
+}
+
+.idea-description {
+  font-size: 1.05rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+/* ===== INFORMAÇÕES ===== */
+.idea-info {
+  background-color: #f0f6ff;
+  border-left: 4px solid #007bff;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.idea-info p {
+  margin: 0.3rem 0;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+/* ===== BOTÃO DE VOTO ===== */
+.idea-vote-form {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.vote-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.vote-btn:hover {
+  background-color: #0056b3;
+}
+
+/* ===== AÇÕES (EDITAR / VOLTAR) ===== */
+.idea-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.edit-btn,
+.back-btn {
+  text-decoration: none;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+/* Editar */
+.edit-btn {
+  background-color: #0077b6;
+  color: #fff;
+}
+
+.edit-btn:hover {
+  background-color: #005b8a;
+}
+
+/* Voltar */
+.back-btn {
+  color: #007bff;
+}
+
+.back-btn:hover {
+  color: #0056b3;
+}
+
+/* ===== ANIMAÇÃO ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

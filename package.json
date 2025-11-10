@@ -1,0 +1,28 @@
+{
+  "name": "atv_ideias",
+  "version": "1.0.0",
+  "description": "Plataforma de Ideias - Projeto Front com Express + Handlebars",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "Matheus Ferreira Melo",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "express-handlebars": "^8.0.3",
+    "express-session": "^1.17.3",
+    "jsonwebtoken": "^9.0.2",
+    "method-override": "^3.0.0",
+    "pg": "^8.16.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}

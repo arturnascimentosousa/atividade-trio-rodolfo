@@ -1,0 +1,18 @@
+<nav class="navbar">
+  <div class="navbar-left">
+    <a href="/" class="navbar-logo">Plataforma de Ideias</a>
+  </div>
+
+  <div class="navbar-right">
+    {{#if user}}
+      <span>Olá, {{user.name}}</span>
+      <a href="/profile">Perfil</a>
+      <a href="/logout" class="logout-btn">Sair</a>
+    {{else}}
+      <a href="/usuario/login">Entrar</a>
+      <a href="/usuario/cadastro">Cadastrar</a>
+    {{/if}}
+  </div>
+</nav>
+
+<script src="/partials/navbar/navbar.js" defer></script>
