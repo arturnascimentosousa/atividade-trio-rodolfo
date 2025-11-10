@@ -51,10 +51,8 @@ document.addEventListener('DOMContentLoaded', () => {
         throw new Error(data.erro || 'Erro ao votar');
       }
       
-      // Atualizar o contador de votos
       voteCountEl.textContent = data.votoCount;
       
-      // Alternar classe voted
       btn.classList.toggle('voted', data.userVoted);
 
       showFeedback(data.userVoted ? 'Voto registrado com sucesso!' : 'Voto removido com sucesso!', 'success');

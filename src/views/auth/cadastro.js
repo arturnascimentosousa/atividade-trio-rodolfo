@@ -1,4 +1,3 @@
-// src/views/usuario/cadastro.js
 const formCadastro = document.querySelector(".auth-form");
 
 formCadastro.addEventListener("submit", async (e) => {
@@ -18,13 +17,12 @@ formCadastro.addEventListener("submit", async (e) => {
     const data = await res.json();
 
       if (res.ok) {
-      // Salvar token no localStorage
       if (data.token) {
         localStorage.setItem('token', data.token);
       }
       
       alert("Cadastro realizado com sucesso!");
-      window.location.href = "/ideia"; // Redireciona para lista de ideias
+      window.location.href = "/ideia";
     } else {
       alert(data.message || "Erro ao cadastrar usuário.");
     }

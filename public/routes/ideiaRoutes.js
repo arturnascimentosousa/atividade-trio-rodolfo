@@ -11,7 +11,6 @@ router.delete('/remover/:id', authMiddleware, isAuthor, ideiaController.remover)
 router.get('/listar', authMiddleware, ideiaController.listar);
 router.get('/detalhar/:id', authMiddleware, ideiaController.detalhar);
 
-// Rota para votar em uma ideia
 router.post('/:id/votar', authMiddleware, ideiaController.votar);
 
 module.exports = router;

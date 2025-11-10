@@ -2,7 +2,7 @@ require('dotenv').config();
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../db/conn');
 
-// Models
+
 const Ideia = require('../models/Ideias')(sequelize, DataTypes);
 const Categoria = require('../models/Categorias')(sequelize, DataTypes);
 const Usuario = require('../models/Usuario')(sequelize, DataTypes);
@@ -60,15 +60,15 @@ module.exports = {
             required: false
           }
         ],
-        order: [['id', 'DESC']] // Mais recentes primeiro
+        order: [['id', 'DESC']] 
       });
 
-      // Adiciona contagem de votos e se o usuário atual votou
+      
       const ideiasProcessadas = ideias.map(ideia => {
         const plain = ideia.get({ plain: true });
         plain.votoCount = plain.votos ? plain.votos.length : 0;
         plain.userVoted = plain.votos ? plain.votos.some(v => v.fk_user === req.user.id) : false;
-        delete plain.votos; // Remove array de votos do response
+        delete plain.votos; 
         return plain;
       });
 
@@ -120,16 +120,16 @@ module.exports = {
         return res.status(404).json({ erro: 'Ideia não encontrada' });
       }
 
-      // Verifica se já votou
+      
       const votoExistente = await Voto.findOne({
         where: { fk_ideia: id, fk_user: userId }
       });
 
       if (votoExistente) {
-        // Remove o voto
+        
         await votoExistente.destroy();
         
-        // Atualiza contador
+        
         const votoCount = await Voto.count({
           where: { fk_ideia: id }
         });
@@ -141,13 +141,13 @@ module.exports = {
         });
       }
 
-      // Cria novo voto
+      
       await Voto.create({
         fk_ideia: id,
         fk_user: userId
       });
 
-      // Retorna contagem atualizada
+      
       const votoCount = await Voto.count({
         where: { fk_ideia: id }
       });
@@ -180,7 +180,7 @@ module.exports = {
         });
       }
 
-      // Busca a ideia e verifica se o usuário é o criador
+      
       const ideia = await Ideia.findOne({
         where: {
           id: id,

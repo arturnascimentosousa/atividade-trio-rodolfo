@@ -1,7 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../db/conn');
 
-// Carrega o model Ideias usando a mesma convenção que os controllers
 const Ideia = require('../models/Ideias')(sequelize, DataTypes);
 
 module.exports = async (req, res, next) => {
@@ -21,12 +20,10 @@ module.exports = async (req, res, next) => {
       return res.status(404).json({ erro: 'Ideia não encontrada.' });
     }
 
-    // Verifica se o usuário logado é o criador/autor da ideia
     if (ideia.fk_usuario_criador !== req.user.id) {
       return res.status(403).json({ erro: 'Acesso negado. Somente o autor da ideia pode realizar essa ação.' });
     }
 
-    // autor confirmado
     next();
   } catch (err) {
     console.error('Erro no middleware isAuthor:', err);

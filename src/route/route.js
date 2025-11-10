@@ -26,7 +26,6 @@ async function setupCategorias() {
 }
 
 function isLoggedIn(req, res, next) {
-  // Usuário já foi carregado pelo userMiddleware
   if (!req.user) {
     return res.redirect('/login');
   }
@@ -39,7 +38,6 @@ router.get("/", (req, res) => {
 });
 
 router.get("/login", (req, res) => {
-  // Se já estiver logado, redireciona para ideias
   if (req.user) {
     return res.redirect('/ideia');
   }
@@ -47,18 +45,15 @@ router.get("/login", (req, res) => {
   res.render("auth/login", { 
     layout: "main", 
     title: "Login",
-    auth: true // para carregar auth.css
+    auth: true
   });
 });
 
 router.post("/login", (req, res) => {
-  // Esta rota de POST é usada apenas para renderização tradicional;
-  // O fluxo principal de login via API está em /usuario/login
   res.redirect("/ideia");
 });
 
 router.get("/cadastro", (req, res) => {
-  // Se já estiver logado, redireciona para ideias
   if (req.user) {
     return res.redirect('/ideia');
   }
@@ -66,7 +61,7 @@ router.get("/cadastro", (req, res) => {
   res.render("auth/cadastro", { 
     layout: "main", 
     title: "Cadastro",
-    auth: true // para carregar auth.css
+    auth: true
   });
 });
 
@@ -76,14 +71,11 @@ router.post("/cadastro", (req, res) => {
 });
 
 router.get("/logout", (req, res) => {
-  // limpa cookie de autenticação
   res.clearCookie && res.clearCookie('token');
-  // também pode remover localStorage via client-side se necessário
   res.redirect('/login');
 });
 
 
-// Middleware para tentar pegar usuário do token sem bloquear acesso
 function tryGetUser(req, res, next) {
   try {
     const tokenFromCookie = req.cookies && req.cookies.token;
@@ -102,12 +94,10 @@ function tryGetUser(req, res, next) {
     }
     next();
   } catch (err) {
-    // Se token inválido, apenas continua sem user
     next();
   }
 }
 
-// Função para garantir que as categorias existam
 async function setupCategorias() {
   const { Categoria } = require('../../public/models');
   
@@ -121,12 +111,9 @@ async function setupCategorias() {
   ];
 
   try {
-    // Para cada categoria base
     for (const nome of categoriasBase) {
-      // Verifica se já existe
       const existe = await Categoria.findOne({ where: { nome } });
       
-      // Se não existe, cria
       if (!existe) {
         await Categoria.create({ nome });
         console.log(`Categoria '${nome}' criada.`);
@@ -139,7 +126,6 @@ async function setupCategorias() {
   }
 }
 
-// Chamar setup de categorias ao iniciar o servidor
 setupCategorias();
 
 router.get("/ideia", async (req, res) => {
@@ -182,7 +168,6 @@ router.get("/ideia/new", isLoggedIn, async (req, res) => {
   try {
     const { Categoria } = require('../../public/models');
     
-    // Buscar todas as categorias para o select
     const categorias = await Categoria.findAll({
       attributes: ['id', 'nome'],
       order: [['nome', 'ASC']]
@@ -190,9 +175,8 @@ router.get("/ideia/new", isLoggedIn, async (req, res) => {
 
     console.log('Categorias carregadas:', categorias.length);
     if (categorias.length === 0) {
-      // Se não há categorias, tenta fazer o setup novamente
+
       await setupCategorias();
-      // Tenta carregar novamente
       const categoriasRetry = await Categoria.findAll({
         attributes: ['id', 'nome'],
         order: [['nome', 'ASC']]
@@ -201,7 +185,6 @@ router.get("/ideia/new", isLoggedIn, async (req, res) => {
       categorias = categoriasRetry;
     }
 
-    // Log das categorias
     console.log('Categorias:', categorias.map(c => ({id: c.id, nome: c.nome})));
 
     res.render("ideia/create-ideas/create-ideas", { 
@@ -226,7 +209,6 @@ router.post("/api/ideia", isLoggedIn, async (req, res) => {
     const { Ideia, Categoria } = require('../../public/models');
     const { titulo, detalhes, fk_categoria } = req.body;
 
-    // Validações
     if (!titulo || !fk_categoria) {
       return res.status(400).json({
         erro: 'Campos obrigatórios ausentes',
@@ -234,7 +216,6 @@ router.post("/api/ideia", isLoggedIn, async (req, res) => {
       });
     }
 
-    // Verificar se categoria existe
     const categoria = await Categoria.findByPk(fk_categoria);
     if (!categoria) {
       return res.status(400).json({
@@ -243,7 +224,6 @@ router.post("/api/ideia", isLoggedIn, async (req, res) => {
       });
     }
 
-    // Criar ideia
     const ideia = await Ideia.create({
       titulo,
       detalhes,
@@ -265,14 +245,12 @@ router.post("/api/ideia", isLoggedIn, async (req, res) => {
 });
 
 
-// Rota para votar em uma ideia
 router.post("/ideia/:id/votar", isLoggedIn, async (req, res) => {
   try {
     const { Ideia, Voto } = require('../../public/models');
     const ideiaId = req.params.id;
     const userId = res.locals.user.id;
 
-    // Verificar se a ideia existe
     const ideia = await Ideia.findByPk(ideiaId);
     if (!ideia) {
       return res.status(404).json({
@@ -280,7 +258,6 @@ router.post("/ideia/:id/votar", isLoggedIn, async (req, res) => {
       });
     }
 
-    // Verificar se já votou
     const votoExistente = await Voto.findOne({
       where: {
         fk_ideia: ideiaId,
@@ -289,17 +266,14 @@ router.post("/ideia/:id/votar", isLoggedIn, async (req, res) => {
     });
 
     if (votoExistente) {
-      // Remove o voto
       await votoExistente.destroy();
     } else {
-      // Cria novo voto
       await Voto.create({
         fk_ideia: ideiaId,
         fk_user: userId
       });
     }
 
-    // Retorna contagem atualizada
     const votoCount = await Voto.count({
       where: { fk_ideia: ideiaId }
     });
@@ -348,12 +322,10 @@ router.get("/ideia/:id", async (req, res) => {
       });
     }
 
-    // Buscar quantidade de votos
     const votoCount = await Voto.count({
       where: { fk_ideia: ideiaId }
     });
 
-    // Verificar se o usuário atual já votou
     let userVoted = false;
     if (res.locals.user) {
       const voto = await Voto.findOne({
@@ -365,7 +337,6 @@ router.get("/ideia/:id", async (req, res) => {
       userVoted = !!voto;
     }
 
-    // Converter para objeto plano e adicionar informações de voto
     const ideiaPlain = ideia.get({ plain: true });
     ideiaPlain.votoCount = votoCount;
     ideiaPlain.userVoted = userVoted;
@@ -390,27 +361,23 @@ router.get("/ideia/:id/edit", isLoggedIn, async (req, res) => {
   const ideaId = req.params.id;
 
   try {
-    // Buscar todas as categorias para o select
     let categorias = await Categoria.findAll({
       attributes: ['id', 'nome'],
       order: [['nome', 'ASC']]
     });
 
     if (categorias.length === 0) {
-      // Se não há categorias, tenta fazer o setup novamente
       await setupCategorias();
-      // Tenta carregar novamente
       categorias = await Categoria.findAll({
         attributes: ['id', 'nome'],
         order: [['nome', 'ASC']]
       });
     }
 
-    // Buscar a ideia
     const ideia = await Ideia.findOne({
       where: { 
         id: ideaId,
-        fk_usuario_criador: res.locals.user.id // Garante que o usuário é o criador
+        fk_usuario_criador: res.locals.user.id 
       }
     });
 
@@ -439,14 +406,10 @@ router.get("/ideia/:id/edit", isLoggedIn, async (req, res) => {
 
 router.post("/ideia/atualizar/:id", isLoggedIn, async (req, res) => {
   try {
-    // Passa o user do middleware para o controller
     req.user = res.locals.user;
-    req.params.id = req.params.id; // Garantir que o id está disponível para o controller
-    
-    // Define o header de Content-Type como JSON
+    req.params.id = req.params.id; 
     res.setHeader('Content-Type', 'application/json');
     
-    // Usa o controller para atualizar a ideia
     return await ideiaController.atualizar(req, res);
   } catch (error) {
     console.error('Erro ao atualizar ideia:', error);
@@ -460,10 +423,8 @@ router.post("/ideia/atualizar/:id", isLoggedIn, async (req, res) => {
 
 router.get("/profile", isLoggedIn, async (req, res) => {
   try {
-    // Importa modelos já inicializados com associações
     const { Usuario, Ideia } = require('../../public/models');
 
-    // Busca usuário com suas ideias
     const userFromDb = await Usuario.findOne({
       where: { id: res.locals.user.id },
       include: [{
@@ -477,7 +438,6 @@ router.get("/profile", isLoggedIn, async (req, res) => {
       return res.redirect('/login');
     }
 
-    // Prepara dados para a view
     const user = {
       id: userFromDb.id,
       email: userFromDb.email,

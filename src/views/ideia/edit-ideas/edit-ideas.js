@@ -33,7 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
         throw new Error(data.erro || data.detalhes || 'Erro ao atualizar ideia');
       }
 
-      // Se sucesso, mostra mensagem e redireciona
       alert('Ideia atualizada com sucesso!');
       window.location.href = `/ideia/${ideaId}`;
     } catch (error) {

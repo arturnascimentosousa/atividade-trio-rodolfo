@@ -14,7 +14,6 @@ const PORT = 3000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Simple cookie parser (no dependency) -> popula req.cookies
 app.use((req, res, next) => {
   req.cookies = {};
   const cookieHeader = req.headers && req.headers.cookie;
@@ -32,10 +31,8 @@ app.use((req, res, next) => {
   next();
 });
 
-// Middleware para disponibilizar usuário em todas as rotas/views
 app.use(userMiddleware);
 
-// Servir arquivos estáticos
 app.use('/views', express.static(path.join(__dirname, 'src', 'views'), {
   setHeaders: (res, filePath) => {
     if (filePath.endsWith('.js')) {
@@ -44,7 +41,6 @@ app.use('/views', express.static(path.join(__dirname, 'src', 'views'), {
   }
 }));
 
-// configurar views para usar os templates em src/views e extensão .hbs
 app.engine('hbs', engine({
   extname: '.hbs',
   layoutsDir: path.join(__dirname, 'src', 'views', 'layout'),
@@ -66,25 +62,20 @@ app.engine('hbs', engine({
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'src', 'views'));
 
-// servir arquivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
-// expor os scripts das views (ex: /auth/login.js) diretamente
 app.use('/auth', express.static(path.join(__dirname, 'src', 'views', 'auth')));
 
-// servir arquivos estáticos das views
 app.use('/layout', express.static(path.join(__dirname, 'src', 'views', 'layout')));
 app.use('/partials', express.static(path.join(__dirname, 'src', 'views', 'partials')));
-app.use('/views', express.static(path.join(__dirname, 'src', 'views'))); // servir toda a pasta views
+app.use('/views', express.static(path.join(__dirname, 'src', 'views'))); 
 
-// rotas
 app.use('/', require('./src/route/route'));
 app.use('/usuario', usuarioRoutes);
 app.use('/ideia', ideiaRoutes);
 app.use('/votos', votosRoutes)
 
-// 5. CONEXÃO COM O BANCO E INICIALIZAÇÃO DO SERVIDOR
 sequelize
-  .sync({ alter: true }) // <-- adiciona/atualiza colunas da tabela automaticamente
+  .sync({ alter: true }) 
   .then(() => {
     console.log('Banco sincronizado com sucesso!');
     app.listen(PORT, () =>

@@ -10,7 +10,6 @@ formLogin.addEventListener("submit", async (e) => {
     const res = await fetch("/usuario/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      // garante que cookies enviados pelo servidor sejam aceitos pelo browser
       credentials: 'same-origin',
       body: JSON.stringify({ email, senha })
     });
@@ -18,12 +17,10 @@ formLogin.addEventListener("submit", async (e) => {
     const data = await res.json();
 
     if (res.ok) {
-      // token também veio em cookie HTTP-only; guardamos em localStorage para chamadas API se desejar
       localStorage.setItem("token", data.token);
-      // redireciona para o perfil do usuário
       window.location.href = "/profile";
     } else {
-      alert(data.message); // mostra erro
+      alert(data.message);
     }
   } catch (err) {
     console.error(err);

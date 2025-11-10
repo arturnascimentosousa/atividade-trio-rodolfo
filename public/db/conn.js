@@ -25,7 +25,7 @@ const initDB = async () => {
   }
 };
 
-// Inicializa o banco
+
 initDB();
 
 module.exports = sequelize;

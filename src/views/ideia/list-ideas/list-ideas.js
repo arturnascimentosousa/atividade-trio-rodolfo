@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Adicionar listeners para todos os botões de voto
   document.querySelectorAll('.vote-btn').forEach(btn => {
     btn.addEventListener('click', handleVote);
   });
@@ -29,10 +28,8 @@ async function handleVote(e) {
 
     const data = await response.json();
     
-    // Atualizar o contador de votos
     voteCountEl.textContent = data.votoCount;
     
-    // Alternar classe voted
     btn.classList.toggle('voted', data.userVoted);
 
   } catch (error) {

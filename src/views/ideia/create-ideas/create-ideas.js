@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
         fk_categoria: parseInt(form.fk_categoria.value)
       };
 
-      // Pegar token do localStorage (setado no login)
       const token = localStorage.getItem("token");
       
       const response = await fetch("/api/ideia", {
@@ -22,20 +21,17 @@ document.addEventListener("DOMContentLoaded", () => {
           "Authorization": token
         },
         body: JSON.stringify(formData),
-        credentials: 'same-origin' // para enviar cookies
+        credentials: 'same-origin'
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        // Mostrar mensagem de sucesso
         successMessage.style.display = "block";
         successMessage.textContent = "Ideia criada com sucesso!";
         
-        // Limpar formulário
         form.reset();
         
-        // Redirecionar após 1.5 segundos
         setTimeout(() => {
           window.location.href = "/profile";
         }, 1500);

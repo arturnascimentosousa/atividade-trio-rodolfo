@@ -17,14 +17,14 @@ module.exports = {
         return res.status(400).json({ message: 'Email já cadastrado.' });
       }
 
-      // Validar senha
+      
       if (senha.length < 6) {
         return res.status(400).json({ 
           message: 'A senha deve ter no mínimo 6 caracteres.' 
         });
       }
 
-      // Validar email
+    
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) {
         return res.status(400).json({ 
@@ -40,7 +40,7 @@ module.exports = {
         senha: senhaHash
       });
 
-      // Gerar token JWT
+     
       const token = jwt.sign(
         { 
           id: novoUsuario.id, 
@@ -51,11 +51,11 @@ module.exports = {
         { expiresIn: '24h' }
       );
 
-      // Setar cookie
+    
       res.cookie('token', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        maxAge: 24 * 60 * 60 * 1000 // 24 horas
+        maxAge: 24 * 60 * 60 * 1000 
       });
 
       return res.status(201).json({
@@ -92,10 +92,10 @@ module.exports = {
       const payload = { id: usuario.id, email: usuario.email };
       const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '24h' });
 
-      // set cookie HTTP-only (para SSR) - cookie contém o token puro (sem 'Bearer ')
+      
       res.cookie('token', token, {
         httpOnly: true,
-        maxAge: 24 * 60 * 60 * 1000, // 24h
+        maxAge: 24 * 60 * 60 * 1000, 
         sameSite: 'lax'
       });
 
