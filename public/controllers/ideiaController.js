@@ -226,30 +226,42 @@ module.exports = {
     }
   },
 
-  async remover(req, res) {
-    try {
-      const { id } = req.params;
+async remover(req, res) {
+  try {
+    const { id } = req.params;
+    const userId = req.user.id;
 
-      if (isNaN(id)) {
-        return res.status(400).json({
-          erro: 'Parâmetro inválido',
-          detalhes: 'O ID informado deve ser numérico.'
-        });
-      }
-
-      const ideia = await Ideia.findByPk(id);
-      if (!ideia) {
-        return res.status(404).json({ erro: 'Ideia não encontrada' });
-      }
-
-      await ideia.destroy();
-      res.status(200).json({ mensagem: 'Ideia removida com sucesso' });
-    } catch (err) {
-      console.error('Erro ao remover ideia:', err);
-      res.status(500).json({
-        erro: 'Erro interno ao remover ideia',
-        detalhes: err.message
+    if (isNaN(id)) {
+      return res.status(400).json({
+        erro: 'Parâmetro inválido',
+        detalhes: 'O ID informado deve ser numérico.'
       });
     }
+
+    const ideia = await Ideia.findOne({
+      where: {
+        id,
+        fk_usuario_criador: userId
+      }
+    });
+
+    if (!ideia) {
+      return res.status(404).json({
+        erro: 'Ideia não encontrada ou você não pode deletá-la'
+      });
+    }
+
+    await ideia.destroy();
+
+    res.status(200).json({ mensagem: 'Ideia removida com sucesso' });
+
+  } catch (err) {
+    console.error('Erro ao remover ideia:', err);
+    res.status(500).json({
+      erro: 'Erro interno ao remover ideia',
+      detalhes: err.message
+    });
   }
+}
+
 };

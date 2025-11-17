@@ -63,3 +63,54 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const deleteBtn = document.querySelector('.delete-btn');
+
+  const popup = document.getElementById('delete-popup');
+  const confirmDeleteBtn = document.getElementById('confirm-delete');
+  const cancelDeleteBtn = document.getElementById('cancel-delete');
+
+  let ideiaIdToDelete = null;
+
+  if (deleteBtn) {
+    deleteBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      ideiaIdToDelete = e.currentTarget.dataset.ideaId;
+
+      popup.classList.remove("hidden");
+    });
+  }
+
+  cancelDeleteBtn.addEventListener('click', () => {
+    popup.classList.add('hidden');
+    ideiaIdToDelete = null;
+  });
+
+  confirmDeleteBtn.addEventListener('click', async () => {
+    if (!ideiaIdToDelete) return;
+
+    try {
+      const token = localStorage.getItem('token');
+
+      const response = await fetch(`/ideia/${ideiaIdToDelete}/remover`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token
+        }
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) throw new Error(data.erro || "Erro ao remover ideia");
+
+      window.location.href = "/ideia";
+
+    } catch (error) {
+      alert("Erro: " + error.message);
+      console.error("Erro ao remover:", error);
+    }
+  });
+});
+

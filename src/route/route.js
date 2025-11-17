@@ -466,5 +466,20 @@ router.get("/profile", isLoggedIn, async (req, res) => {
   }
 });
 
+router.post("/ideia/:id/remover", isLoggedIn, async (req, res) => {
+  try {
+    req.user = res.locals.user; // garante que o controller recebe o user
+    req.params.id = req.params.id;
+
+    return await ideiaController.remover(req, res);
+  } catch (error) {
+    console.error('Erro ao remover ideia:', error);
+    return res.status(500).json({
+      erro: 'Erro interno ao remover ideia',
+      detalhes: error.message
+    });
+  }
+});
+
 module.exports = router;
 

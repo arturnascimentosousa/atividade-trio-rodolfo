@@ -19,10 +19,24 @@
     <div class="idea-actions">
       {{#if (eq ideia.criador.id user.id)}}
         <a href="/ideia/{{ideia.id}}/edit" class="edit-btn">✏️ Editar</a>
+        <a href="#" class="delete-btn" data-idea-id="{{ideia.id}}">🗑️ Excluir</a>
       {{/if}}
+      
       <a href="/ideia" class="back-btn">← Voltar</a>
     </div>
   </div>
+  <div id="delete-popup" class="popup-overlay hidden">
+  <div class="popup-box">
+    <h2>Excluir Ideia</h2>
+    <p>Tem certeza que deseja excluir esta ideia?</p>
+
+    <div class="popup-actions">
+      <button id="cancel-delete" class="btn cancel">Cancelar</button>
+      <button id="confirm-delete" class="btn confirm">Excluir</button>
+    </div>
+  </div>
+</div>
+
 </main>
 
 <link rel="stylesheet" href="/views/ideia/show-ideas/show-ideas.css">
